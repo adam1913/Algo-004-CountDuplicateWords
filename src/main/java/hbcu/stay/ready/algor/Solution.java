@@ -15,32 +15,46 @@ public class Solution {
         String view = "";
 
 
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        String modifiedInput = input.replace(".", "");
+        String moreModifiedInput = modifiedInput.replaceAll("!", "");
+        String[] look = moreModifiedInput.split(" ");
 
 
-        String[] look = input.split("\\.|\\!|\\s");
-
-
-        Integer count = 0;
-        for (String words : look) {
-
-
-            if (map.containsKey(words)) {
-
-                map.put(words, count++);
-            } else {
+        for(String words : look) {
+            if(!map.containsKey(words)) {
                 map.put(words, 1);
-
-
             }
-
-            
-
-
-            view = "Seem" + map.keySet();
+            else {
+                int currentValue = map.get(words);
+                currentValue++;
+                map.put(words, currentValue);
+            }
         }
+
+        view += String.format("The %d unique words are:\n", map.size());
+        int size = 0;
+        for (String w : map.keySet()) {
+            size++;
+            int value = map.get(w);
+            if (size < map.size()) {
+                view += String.format("%s (Seen %d)\n", w, value);
+            }
+            else {
+                view += String.format("%s (Seen %d)", w, value);
+            }
+        }
+
         return view;
     }
 }
+
+
+
+
+
+
+
+
 
 
